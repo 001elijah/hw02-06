@@ -23,6 +23,14 @@ const userSchema = new Schema({
         enum: ["starter", "pro", "business"],
         default: "starter"
     },
+    verify: {
+        type: Boolean,
+        default: false,
+    },
+    verificationToken: {
+        type: String,
+        required: [true, 'Verify token is required'],
+    },
     token: {
         type: String,
         default: ''
@@ -48,10 +56,15 @@ const updateUserSubcriptionSchema = Joi.object({
     })
 })
 
+const verifyEmailSchema = Joi.object({
+    email: Joi.string().email().required()
+})
+
 const schemas = {
     registerSchema,
     loginSchema,
-    updateUserSubcriptionSchema
+    updateUserSubcriptionSchema,
+    verifyEmailSchema
 }
 
 const User = model('user', userSchema);
